@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_radio_player"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#212121"
+    tools:context="com.yusufcakmak.exoplayersample.PlayerActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <ImageView
+            android:id="@+id/imgMusic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/txtSongName"
+            android:layout_margin="16dp"
+            android:src="@drawable/music"
+            android:transitionName="songImage" />
+
+        <TextView
+            android:layout_marginLeft="16dp"
+            android:id="@+id/txtSongName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/imgPlay"
+            android:layout_marginBottom="16dp"
+            android:text="Song Name"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:transitionName="songName" />
+
+        <ImageView
+            android:id="@+id/imgPlay"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_above="@+id/seekBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/play" />
+
+        <app.minimize.com.seek_bar_compat.SeekBarCompat
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottomView"
+            android:layout_marginBottom="16dp"
+            android:maxHeight="300sp"
+            app:progressBackgroundColor="#d5d5d5"
+            app:progressColor="@color/colorPrimary"
+            app:thumbAlpha="10.0"
+            app:thumbColor="@color/colorPrimary" />
+
+        <RelativeLayout
+            android:layout_marginBottom="16dp"
+            android:id="@+id/bottomView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/currentTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="16dp"
+                android:text="00:00"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/totalTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:text="00:00"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
