@@ -93,8 +93,8 @@ public class PlayerActivity extends AppCompatActivity {
         setTitle("");
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         txtTitle.setText("Exo-Player Demo");
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +117,7 @@ public class PlayerActivity extends AppCompatActivity {
         if (song != null) {
             txtSongName.setText(song.getTITLE());
         }
+        txtSongName.setVisibility(View.GONE);
         txtCurrentTime = (TextView) findViewById(R.id.currentTime);
         txtTotalTime = (TextView) findViewById(R.id.totalTime);
         play = (ImageView) findViewById(R.id.imgPlay);
@@ -229,13 +230,13 @@ public class PlayerActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                Log.e("progress start", seekBar.getProgress() + "");
+//                Log.e("progress start", seekBar.getProgress() + "");
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Log.e("progress stop", seekBar.getProgress() + "");
-                BackgroudService.player.seekTo(seekBar.getProgress());
+//                Log.e("progress stop", seekBar.getProgress() + "");
+                player.seekTo(seekBar.getProgress());
             }
         });
 
@@ -318,7 +319,6 @@ public class PlayerActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("sdfgf",BackgroudService.player.getPlayWhenReady()+"");
                         onProgressUpdate();
                     }
                 });

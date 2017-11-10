@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
@@ -36,6 +35,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackControlView
     private DefaultTrackSelector trackSelector;
     private boolean shouldAutoPlay;
     private BandwidthMeter bandwidthMeter;
+    private String url = "https://www.stuffdown.com/2017/Mozzy%20-%201%20Up%20Top%20Ahk%20-%20(www.SongsLover.club)/04.%20Take%20It%20Up%20With%20God%20(Ft.%20Celly%20Ru)%20-%20(www.SongsLover.club).mp3";
 
     private ImageView ivHideControllerButton;
 
@@ -44,6 +44,11 @@ public class VideoPlayerActivity extends Activity implements PlaybackControlView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
+
+        if (!AppConstant.isConnected(this)) {
+            Toast.makeText(this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
         shouldAutoPlay = true;
         bandwidthMeter = new DefaultBandwidthMeter();
@@ -57,6 +62,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackControlView
 //            }
 //        });
 
+        initializePlayer();
     }
 
     private void initializePlayer() {
@@ -79,13 +85,16 @@ public class VideoPlayerActivity extends Activity implements PlaybackControlView
 
         DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
 
-        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
+//        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"),
+//                mediaDataSourceFactory, extractorsFactory, null, null);
+        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(url),
                 mediaDataSourceFactory, extractorsFactory, null, null);
 
         player.prepare(mediaSource);
 
 
         simpleExoPlayerView.setControllerVisibilityListener(this);
+
     }
 
     private void releasePlayer() {
@@ -101,7 +110,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackControlView
     public void onStart() {
         super.onStart();
         if (Util.SDK_INT > 23) {
-            initializePlayer();
+//            initializePlayer();
         }
     }
 
@@ -109,7 +118,7 @@ public class VideoPlayerActivity extends Activity implements PlaybackControlView
     public void onResume() {
         super.onResume();
         if ((Util.SDK_INT <= 23 || player == null)) {
-            initializePlayer();
+//            initializePlayer();
         }
     }
 
@@ -117,13 +126,21 @@ public class VideoPlayerActivity extends Activity implements PlaybackControlView
     public void onPause() {
         super.onPause();
         if (Util.SDK_INT <= 23) {
-            releasePlayer();
+//            releasePlayer();
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        if (Util.SDK_INT > 23) {
+//            releasePlayer();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         if (Util.SDK_INT > 23) {
             releasePlayer();
         }
@@ -136,6 +153,6 @@ public class VideoPlayerActivity extends Activity implements PlaybackControlView
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
-        Log.e("has","has");
+        Log.e("has", "has");
     }
 }
